@@ -54,10 +54,11 @@ public class GameStage {
             computer.setStatus(Status.TURN);
         }
 
-        seeCards.setDisable(me.getStatus().equals(Status.OFF));
+        //seeCards.setDisable(me.getStatus().equals(Status.OFF));
 
         seeCards.setOnAction( e-> {
-            seeUserCards.MainSeeCards(lists[1]);
+            Integer integer = seeUserCards.MainSeeCards(lists[1]);
+            System.out.println(integer);
         });
 
         end();
