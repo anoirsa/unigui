@@ -84,7 +84,7 @@ public class SeeUserCards {
         gridPane.setPadding(new Insets(10,10,10,10));
        // Scene scene = new Scene(gridPane,450,450);
        // Pre-Testing
-       Scene scene = new Scene(returnedLayout(gridPane,purpose),450,450);
+       Scene scene = new Scene(returnedLayout(gridPane,purpose),550,450);
         window.setScene(scene);
         window.showAndWait();
         return valueReturnd.get();
@@ -107,8 +107,10 @@ public class SeeUserCards {
                 break;
             case CHOOSE_PURPOSE:
                 headerLabel.setText("You need to choose one of these options you have.");
+                break;
             case SEE_PURPOSE:
                 headerLabel.setText("Here you can see all your cards");
+                break;
         }
         return borderPane;
     }

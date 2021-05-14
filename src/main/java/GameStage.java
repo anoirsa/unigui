@@ -2,6 +2,7 @@ import data.*;
 import data.enums.Purpose;
 import data.enums.Status;
 import data.enums.Who;
+import data.staticmethods.Outsiders;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -60,14 +61,12 @@ public class GameStage {
         else {
             computer.setStatus(Status.TURN);
         }
-
          nextOrder = "";
          referee = new Referee(me,computer,remainigCards,nextOrder);
          gameEnded = false;
          nextOrder = referee.getFirstCard.get();
 
          proceed.setOnAction( e-> {
-
              nextOrder = me.handlePlayerChoices.apply(nextOrder);
              nextOrder = computer.handlePlayerChoices.apply(nextOrder);
              referee.setPlayer1(me);
@@ -77,7 +76,7 @@ public class GameStage {
              me = referee.getPlayer1();
              computer = referee.getPlayer2();
              // Setting the updated field image
-             imageV = seeCurrentCard(cureFirstOrder);
+             imageV = seeCurrentCard(Outsiders.splitNextOrder(nextOrder));
              imageOfInput.setImage(imageV);
              // Setting the updated field image
          });
