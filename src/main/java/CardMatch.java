@@ -63,9 +63,7 @@ public class CardMatch {
             player2Cards.add(list.get(index2));
             list.remove(index2);
         }
-        // Pre-Testing
-        player1Cards.add("Demand");
-        // Pre-Testing
+
         return new List[]{list, player1Cards, player2Cards};
     }
 

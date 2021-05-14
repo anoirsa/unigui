@@ -63,10 +63,7 @@ public class GameStage {
         else {
             computer.setStatus(Status.TURN);
         }
-        //Pre-Testing
-        me.setStatus(Status.TURN);
-        computer.setStatus(Status.OFF);
-        //Pre-Testing
+
          nextOrder = "";
          referee = new Referee(me,computer,remainigCards,nextOrder);
          gameEnded = false;
