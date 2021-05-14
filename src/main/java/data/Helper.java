@@ -117,13 +117,14 @@ public class Helper {
                 //Delay
                 givenList.forEach(c ->{
                     System.out.println(givenList.indexOf(c) + 1 + "- " + c);
+                    /**
                     try {
                         TimeUnit.MILLISECONDS.sleep(500);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
-                    }
+                    } **/
                 });
-                TimeUnit.SECONDS.sleep(1);
+                //TimeUnit.SECONDS.sleep(1);
                 //Delay
                 //IMPROVE
                 //Integer myChoice = scanner.nextInt();
@@ -137,7 +138,7 @@ public class Helper {
                 // Demand handling part //
                 if (givenList.get(myIndexChoice).equals("Demand")) {
                 //  System.out.println("What color you are demanding \n 1-Red \n 2-Yellow \n 3-Blue \n 3-Green");
-                    //TimeUnit.SECONDS.sleep(1);
+                    TimeUnit.SECONDS.sleep(1);
                     // Delay
                     List<String> listOfColorDemanded = List.of("Green CX","Red CX","Yellow CX","Blue CX");
                     // Using the GUI for demand color
