@@ -1,3 +1,6 @@
+package data;
+
+import data.enums.Purpose;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -11,14 +14,13 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class SeeUserCards {
 
     Stage window;
     List<ImageView> listOfImages;
-    List<String>  cards = CardMatch.distibuteCards(CardMatch.matchStart())[1];
-    public Integer MainSeeCards(List<String> listToShow) {
+
+    public Integer MainSeeCards(List<String> listToShow , Purpose purpose) {
         AtomicInteger valueReturnd = new AtomicInteger();
         listOfImages = new ArrayList<>();
         window = new Stage();
@@ -27,8 +29,8 @@ public class SeeUserCards {
         GridPane gridPane = new GridPane();
         AtomicInteger i = new AtomicInteger(0);
         AtomicInteger j = new AtomicInteger(0);
-        System.out.println(cards);
-        cards.stream().forEach(c -> {
+        System.out.println(listToShow);
+        listToShow.stream().forEach(c -> {
             try {
                 Image image = new Image(new FileInputStream("./Cards/"+c+".png"));
 
@@ -55,12 +57,14 @@ public class SeeUserCards {
                 im.setOpacity(1);
 
             });
-            im.setOnMouseClicked(event -> {
-                System.out.println(listOfImages.indexOf(im));
-                valueReturnd.set(listOfImages.indexOf(im));
-                System.out.println(valueReturnd.get());
-                window.close();
-            });
+            if (purpose.equals(Purpose.CHOOSE_PURPOSE)) {
+                im.setOnMouseClicked(event -> {
+                    System.out.println(listOfImages.indexOf(im));
+                    valueReturnd.set(listOfImages.indexOf(im));
+                    System.out.println(valueReturnd.get());
+                    window.close();
+                });
+            }
         });
         gridPane.setVgap(10);
         gridPane.setHgap(10);
@@ -69,7 +73,6 @@ public class SeeUserCards {
         window.setScene(scene);
         window.showAndWait();
         return valueReturnd.get();
-
     }
 
 

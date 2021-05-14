@@ -1,5 +1,8 @@
 package data;
 
+import data.enums.Status;
+import data.enums.Who;
+
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -50,7 +53,7 @@ public class Referee {
     public Function<String , String> handleOutcome  = nextOrder -> {
         String[] validateNextOrder = nextOrder.split("-");
         //  Try in
-        Map<Who ,Player> mapping = Map.of(Who.USER, player1 , Who.COMPUTER, player2);
+        Map<Who,Player> mapping = Map.of(Who.USER, player1 , Who.COMPUTER, player2);
         //IMPROVE
         Player assessedPlayer = mapping.get(Who.valueOf(validateNextOrder[2]));
         Player counterPlayer = new Player() ;

@@ -1,22 +1,17 @@
-import data.Gender;
+import data.enums.Gender;
 import data.Player;
-import data.Who;
+import data.enums.Who;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import javax.security.auth.callback.TextOutputCallback;
-import javax.swing.text.TextAction;
-
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static data.Gender.*;
+import static data.enums.Gender.*;
 
 
 public class RegisterStage {

@@ -1,5 +1,10 @@
 package data;
 
+import data.enums.Gender;
+import data.enums.Order;
+import data.enums.Status;
+import data.enums.Who;
+
 import java.util.List;
 import java.util.function.Function;
 

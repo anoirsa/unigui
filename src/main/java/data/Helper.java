@@ -1,5 +1,9 @@
 package data;
 
+import data.enums.Order;
+import data.enums.Purpose;
+import data.enums.Who;
+
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -10,10 +14,12 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+
 public class Helper {
     private String playerName;
     private Who whoPlayer;
     Scanner scanner = new Scanner(System.in);
+    SeeUserCards seeUserCards = new SeeUserCards();
     public Helper(String playerName, Who whoPlayer)  {
         this.playerName = playerName;
         this.whoPlayer = whoPlayer;
@@ -100,68 +106,68 @@ public class Helper {
     BiFunction<List<String>,Integer, String> displayAvailableChoices = (list , cardsRemained) -> {
         try {
             int myIndexChoice;
-            String demandedColor;
+            String demandedColor, demandedColorGUI;
             String theFinalReturn;
+            List<String> givenList = list;
+            // add the noPlay turn to the list
+            list.add("doNotPlay");
             if (whoPlayer.equals(Who.USER)) {
                 System.out.println("Your available choices are :");
-
                 TimeUnit.SECONDS.sleep(2);
                 //Delay
-                list.forEach(c ->{
-                    System.out.println(list.indexOf(c) + 1 + "- " + c);
+                givenList.forEach(c ->{
+                    System.out.println(givenList.indexOf(c) + 1 + "- " + c);
                     try {
                         TimeUnit.MILLISECONDS.sleep(500);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 });
-                //IMPROVE
-                System.out.println((list.size() + 1 )+"- Dont't want any of these choices");
-                //IMPROVE
-                System.out.println("What card would you like to put ?  (Type number)");
                 TimeUnit.SECONDS.sleep(1);
                 //Delay
                 //IMPROVE
-                Integer myChoice = scanner.nextInt();
-                if (myChoice == (list.size() + 1)) {
+                //Integer myChoice = scanner.nextInt();
+                Integer myChoice  = seeUserCards.MainSeeCards(givenList, Purpose.CHOOSE_PURPOSE);
+                if (myChoice == ( givenList.size() - 1 )) {
                     System.out.println("You decided to not choose any option");
                     return "NIP";
                 }
                 //IMPROVE
-                myIndexChoice = myChoice - 1;
+                myIndexChoice = myChoice ;
                 // Demand handling part //
-                if (list.get(myIndexChoice).equals("Demand")) {
-                    System.out.println("What color you are demanding \n 1-Red \n 2-Yellow \n 3-Blue \n 3-Green");
+                if (givenList.get(myIndexChoice).equals("Demand")) {
+                //  System.out.println("What color you are demanding \n 1-Red \n 2-Yellow \n 3-Blue \n 3-Green");
                     TimeUnit.SECONDS.sleep(1);
                     // Delay
-                    demandedColor = colorNumber.apply(scanner.nextInt());
-                    while (demandedColor.equals("NON_VALID CX")) {
+                    List<String> listOfColorDemanded = List.of("Green CX","Red CX","Yellow CX","Blue CX");
+                    // Using the GUI for demand color
+                    Integer DemandedReference = seeUserCards.MainSeeCards
+                            (listOfColorDemanded, Purpose.CHOOSE_PURPOSE);
+                    demandedColorGUI = colorNumber.apply(DemandedReference + 1);
+                    //demandedColor = colorNumber.apply(scanner.nextInt());
+                    /**while (demandedColor.equals("NON_VALID CX")) {
                         System.out.println("Your input must be a number between 1 and 4");
                         demandedColor = colorNumber.apply(scanner.nextInt());
-                    }
-                    theFinalReturn = demandedColor;
-                } else theFinalReturn = list.get(myIndexChoice);
-            } else {
-                // When it is computer turn we need to remind the other players how many cards does he still have
-                System.out.println("Number of card remained are " + (cardsRemained - 1));
 
-                //DELAY
-                TimeUnit.SECONDS.sleep(2);
-                //DELAY
+                    } **/
+                    theFinalReturn = demandedColorGUI;
+                } else theFinalReturn = givenList.get(myIndexChoice);
+            } else {
+                TimeUnit.SECONDS.sleep(1);
                 Random random = new Random();
-                myIndexChoice = random.nextInt(list.size());
-                if (list.get(myIndexChoice).equals("Demand")) {
+                myIndexChoice = random.nextInt(givenList.size());
+                if (givenList.get(myIndexChoice).equals("Demand")) {
                     demandedColor = colorNumber.apply(ThreadLocalRandom.current().nextInt(1, 4 + 1));
                     System.out.println("The computer has demanded " + demandedColor);
                     TimeUnit.SECONDS.sleep(1);
                     // DELAY
                     theFinalReturn = demandedColor;
                 } else {
-                    theFinalReturn = list.get(myIndexChoice);
+                    theFinalReturn = givenList.get(myIndexChoice);
                 }
             }
             System.out.println("The inputed/demanded card is .. " + theFinalReturn);
-            TimeUnit.SECONDS.sleep(3);
+            TimeUnit.SECONDS.sleep(1);
             // DELAY
             return theFinalReturn;
         } catch (InterruptedException e) {
