@@ -66,11 +66,11 @@ public class Helper {
 
             System.out.println("Computer cards list is hidden from normal user");
         }
-        TimeUnit.SECONDS.sleep(2);
+        TimeUnit.SECONDS.sleep(1);
         //DELAY
         System.out.println("The current card on field is : " + cuurentCard);
 
-        TimeUnit.SECONDS.sleep(2);
+        TimeUnit.SECONDS.sleep(1);
         // DELAY
 
         return order.equals(Order.PICK_CARDS) ? getAvailablePickCardC(list,cuurentCard)
@@ -113,7 +113,7 @@ public class Helper {
             list.add("doNotPlay");
             if (whoPlayer.equals(Who.USER)) {
                 System.out.println("Your available choices are :");
-                TimeUnit.SECONDS.sleep(2);
+                TimeUnit.SECONDS.sleep(1);
                 //Delay
                 givenList.forEach(c ->{
                     System.out.println(givenList.indexOf(c) + 1 + "- " + c);
