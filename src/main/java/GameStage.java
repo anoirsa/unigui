@@ -1,12 +1,19 @@
 import data.*;
+import data.enums.Order;
 import data.enums.Purpose;
 import data.enums.Status;
 import data.enums.Who;
+import data.listpackage.Situation;
 import data.staticmethods.Outsiders;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -38,8 +45,12 @@ public class GameStage {
      Referee referee;
      boolean gameEnded;
 
-     // outsider
+     // outsiders
+    StringBuilder analyzer;
     String[] splitFirstOrder;
+    ObservableList tableObserve;
+    TableView<Situation> tableView;
+
     public GameStage( ) {
 
     }
@@ -65,13 +76,25 @@ public class GameStage {
          referee = new Referee(me,computer,remainigCards,nextOrder);
          gameEnded = false;
          nextOrder = referee.getFirstCard.get();
+         //Analyze
+        tableObserve.add(Outsiders.analyzeOutcome(nextOrder));
 
+         //------
          proceed.setOnAction( e-> {
              nextOrder = me.handlePlayerChoices.apply(nextOrder);
+             //Analyze
+             tableObserve.add(Outsiders.analyzeOutcome(nextOrder));
+             //-------
              nextOrder = computer.handlePlayerChoices.apply(nextOrder);
+             //Analyze
+             tableObserve.add(Outsiders.analyzeOutcome(nextOrder));
+             //-------
              referee.setPlayer1(me);
              referee.setPlayer2(computer);
              nextOrder = referee.handleOutcome.apply(nextOrder);
+             // Analyze
+             tableObserve.add(Outsiders.analyzeOutcome(nextOrder));
+             //--------
              gameEnded = referee.handEndOfTheGame.test(listi);
              me = referee.getPlayer1();
              computer = referee.getPlayer2();
@@ -112,6 +135,9 @@ public class GameStage {
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Game Board");
 
+        //launch the observable list
+        tableObserve = FXCollections.observableArrayList();
+
         // Buttons Config
         proceed = new Button("Proceed");
         seeCards = new Button("See your cards :");
@@ -127,6 +153,7 @@ public class GameStage {
         });
         pani = new BorderPane();
         vbox = new VBox();
+        analyzer = new StringBuilder();
     }
 
     public void end() {
@@ -151,9 +178,38 @@ public class GameStage {
         vbox.setSpacing(10);
         vbox.setAlignment(Pos.CENTER);
         pani.setCenter(vbox);
-        Scene scene = new Scene(pani,450,450);
+        handlingTheTableView();
+        Scene scene = new Scene(pani,900,450);
         window.setScene(scene);
         window.showAndWait();
+    }
+
+    public void handlingTheTableView() {
+        TableColumn<Situation, String> playerNameColumn =
+                new TableColumn<>("Player name");
+        TableColumn<Situation, Order> orderColumn =
+                new TableColumn<>("Order");
+        TableColumn<Situation , String> cardPfieldColumn =
+                new TableColumn<>("Card on field");
+        TableColumn<Situation , String> cardInputedColumn =
+                new TableColumn<>("Next Card");
+        playerNameColumn.setMinWidth(100);
+        playerNameColumn.setCellValueFactory(new PropertyValueFactory<>("playerName"));
+
+        orderColumn.setMinWidth(100);
+        orderColumn.setCellValueFactory(new PropertyValueFactory<>("order"));
+
+        cardPfieldColumn.setMinWidth(100);
+        cardPfieldColumn.setCellValueFactory(new PropertyValueFactory<>("cardPfield"));
+
+        cardInputedColumn.setMinWidth(100);
+        cardInputedColumn.setCellValueFactory(new PropertyValueFactory<>("cardInputed"));
+
+        tableView = new TableView<>();
+        tableView.setItems(tableObserve);
+        tableView.getColumns().addAll(playerNameColumn,orderColumn,
+                                      cardPfieldColumn, cardInputedColumn);
+        pani.setLeft(tableView);
     }
 
     public  Image seeCurrentCard(String imageName)  {

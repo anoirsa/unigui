@@ -4,6 +4,7 @@ import data.enums.Order;
 import data.enums.Purpose;
 import data.enums.Who;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -61,10 +62,13 @@ public class Helper {
         }
         else {
             System.out.println("It is the computer turn");
-
-            //TimeUnit.MILLISECONDS.sleep(500);
-
-            System.out.println("Computer cards list is hidden from normal user");
+             // Troubleshoot
+            for (String i : list) {
+                int choiceNumber = list.indexOf(i)+1;
+                System.out.println(choiceNumber +"- "+ i);
+                //TimeUnit.MILLISECONDS.sleep(500);
+            }
+            //---------
         }
         //TimeUnit.SECONDS.sleep(1);
         //DELAY
@@ -108,10 +112,11 @@ public class Helper {
             int myIndexChoice;
             String demandedColor, demandedColorGUI;
             String theFinalReturn;
-            List<String> givenList = list;
-            // add the noPlay turn to the list
-            list.add("doNotPlay");
+            List<String> givenList = (ArrayList)((ArrayList<String>) list).clone();
+
+            //list.add("doNotPlay");
             if (whoPlayer.equals(Who.USER)) {
+                givenList.add("doNotPlay");
                 System.out.println("Your available choices are :");
                 //TimeUnit.SECONDS.sleep(1);
                 //Delay
@@ -154,22 +159,21 @@ public class Helper {
                     theFinalReturn = demandedColorGUI;
                 } else theFinalReturn = givenList.get(myIndexChoice);
             } else {
-                //TimeUnit.SECONDS.sleep(1);
+
                 Random random = new Random();
                 myIndexChoice = random.nextInt(givenList.size());
+                System.out.println(myIndexChoice);
+                // Troubleshoot
                 if (givenList.get(myIndexChoice).equals("Demand")) {
-                    demandedColor = colorNumber.apply(ThreadLocalRandom.current().nextInt(1, 4 + 1));
+                    demandedColor = colorNumber.apply(ThreadLocalRandom.current().nextInt(1, 4 +1 ));
                     System.out.println("The computer has demanded " + demandedColor);
-                    //TimeUnit.SECONDS.sleep(1);
-                    // DELAY
                     theFinalReturn = demandedColor;
+
                 } else {
                     theFinalReturn = givenList.get(myIndexChoice);
                 }
             }
             System.out.println("The inputed/demanded card is .. " + theFinalReturn);
-            //TimeUnit.SECONDS.sleep(1);
-            // DELAY
             return theFinalReturn;
         } catch (InterruptedException e) {
             e.printStackTrace();
