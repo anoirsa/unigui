@@ -24,23 +24,20 @@ public class GameStage {
      List <ImageView> listOfImages;
      List<String>  cards = CardMatch.distibuteCards(CardMatch.matchStart())[1];
      Stage window;
-     Button proceed,seeCards;
+     Button proceed,seeCards,seeComputerCards;
      Image imageV;
      ImageView imageOfInput ;
      SeeUserCards seeUserCards;
      BorderPane pani;
      VBox vbox;
 
-
      // Inside the game
-     Player me;
-     Player computer;
-     String nextOrder;
+     Player me,computer;
+     String nextOrder, cureFirstOrder;
      Referee referee;
      boolean gameEnded;
 
      // outsider
-    String cureFirstOrder;
     String[] splitFirstOrder;
     public GameStage( ) {
 
@@ -119,10 +116,15 @@ public class GameStage {
         // Buttons Config
         proceed = new Button("Proceed");
         seeCards = new Button("See your cards :");
+        seeComputerCards = new Button("See the computer cards");
+        seeUserCards = new SeeUserCards();
         seeCards.setOnAction(e -> {
-            seeUserCards = new SeeUserCards();
             seeUserCards.MainSeeCards(me.getCardLists(),
                                       Purpose.SEE_PURPOSE);
+        });
+        seeComputerCards.setOnAction(e -> {
+            seeUserCards.MainSeeCards(computer.getCardLists() ,
+                    Purpose.COMPUTER_SEE);
         });
         pani = new BorderPane();
         vbox = new VBox();
@@ -142,7 +144,7 @@ public class GameStage {
         imageOfInput.setFitWidth(180);
 
         // handle displaying first inputed card
-        vbox.getChildren().addAll(proceed,new
+        vbox.getChildren().addAll(seeComputerCards,proceed,new
                 Label("The card on field is :"),
                  imageOfInput ,
                 seeCards);

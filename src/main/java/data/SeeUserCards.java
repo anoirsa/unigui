@@ -32,8 +32,12 @@ public class SeeUserCards {
         System.out.println(listToShow);
         listToShow.stream().forEach(c -> {
             try {
-                Image image = new Image(new FileInputStream("./Cards/"+c+".png"));
+                // Validating the type of cards that will be shown
+                boolean chooseOrSeeMe =
+                        purpose.equals(Purpose.CHOOSE_PURPOSE) || purpose.equals(Purpose.SEE_PURPOSE);
+                String questionOrReal = chooseOrSeeMe ? c : "WhatCard";
 
+                Image image =  new Image(new FileInputStream("./Cards/"+questionOrReal+".png"));
                 ImageView imageView = new ImageView(image);
                 imageView.setFitHeight(150);
                 imageView.setFitWidth(100);
