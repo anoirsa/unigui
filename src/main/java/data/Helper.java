@@ -48,35 +48,6 @@ public class Helper {
         return returnedValue;
     };
     public String displayChoices(List<String> list, String cuurentCard , Order order ) throws InterruptedException {
-        if (whoPlayer.equals(Who.USER)) {
-            System.out.println("It is your turn");
-
-            //TimeUnit.MILLISECONDS.sleep(500);
-
-            System.out.println("These are all the cards you have");
-            for (String i : list) {
-                int choiceNumber = list.indexOf(i)+1;
-                System.out.println(choiceNumber +"- "+ i);
-                //TimeUnit.MILLISECONDS.sleep(500);
-            }
-        }
-        else {
-            System.out.println("It is the computer turn");
-             // Troubleshoot
-            for (String i : list) {
-                int choiceNumber = list.indexOf(i)+1;
-                System.out.println(choiceNumber +"- "+ i);
-                //TimeUnit.MILLISECONDS.sleep(500);
-            }
-            //---------
-        }
-        //TimeUnit.SECONDS.sleep(1);
-        //DELAY
-        System.out.println("The current card on field is : " + cuurentCard);
-
-        //TimeUnit.SECONDS.sleep(1);
-        // DELAY
-
         return order.equals(Order.PICK_CARDS) ? getAvailablePickCardC(list,cuurentCard)
                 : getAvailableChocies(list, cuurentCard);
 
@@ -120,22 +91,14 @@ public class Helper {
                 System.out.println("Your available choices are :");
                 //TimeUnit.SECONDS.sleep(1);
                 //Delay
-                givenList.forEach(c ->{
-                    System.out.println(givenList.indexOf(c) + 1 + "- " + c);
-                    /**
-                    try {
-                        TimeUnit.MILLISECONDS.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } **/
-                });
+
                 //TimeUnit.SECONDS.sleep(1);
                 //Delay
                 //IMPROVE
                 //Integer myChoice = scanner.nextInt();
                 Integer myChoice  = seeUserCards.MainSeeCards(givenList, Purpose.CHOOSE_PURPOSE);
                 if (myChoice == ( givenList.size() - 1 )) {
-                    System.out.println("You decided to not choose any option");
+
                     return "NIP";
                 }
                 //IMPROVE
@@ -166,14 +129,14 @@ public class Helper {
                 // Troubleshoot
                 if (givenList.get(myIndexChoice).equals("Demand")) {
                     demandedColor = colorNumber.apply(ThreadLocalRandom.current().nextInt(1, 4 +1 ));
-                    System.out.println("The computer has demanded " + demandedColor);
+
                     theFinalReturn = demandedColor;
 
                 } else {
                     theFinalReturn = givenList.get(myIndexChoice);
                 }
             }
-            System.out.println("The inputed/demanded card is .. " + theFinalReturn);
+
             return theFinalReturn;
         } catch (InterruptedException e) {
             e.printStackTrace();
