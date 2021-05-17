@@ -4,7 +4,8 @@
 1.0.0 (Beta)
 ## Uno Game (GUI) app
 - First version of the game has released
-
+## Running the project
+Run the main class
 
 ## Description of the rules :
 The game differs a little bit from the main real game Uno card game but in the next updates I will
