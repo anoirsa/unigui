@@ -1,7 +1,10 @@
 package data.staticmethods;
 
+import data.Player;
 import data.enums.Order;
+import data.enums.Status;
 import data.listpackage.Situation;
+import javafx.scene.control.Alert;
 
 public class Outsiders {
     public static String splitNextOrder(String order) {
@@ -30,6 +33,17 @@ public class Outsiders {
         }
 
         return situation;
+    }
+
+    public static Alert alertOfWin(Player player1, Player player2) {
+        Alert alertWinner = new Alert(Alert.AlertType.CONFIRMATION);
+
+        // This variable is to determine the winner of the game
+        String winnerName = player1.getStatus().equals(Status.WIN) ? player1.getPlayerName() :
+                player2.getPlayerName();
+
+        alertWinner.setContentText("The game has ended and the winner of the game is "+ winnerName);
+        return alertWinner;
     }
 
 

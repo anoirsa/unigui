@@ -9,10 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -38,6 +35,7 @@ public class GameStage {
      SeeUserCards seeUserCards;
      BorderPane pani;
      VBox vbox;
+
 
      // Inside the game
      Player me,computer;
@@ -78,7 +76,7 @@ public class GameStage {
          nextOrder = referee.getFirstCard.get();
          //Analyze
         tableObserve.add(Outsiders.analyzeOutcome(nextOrder));
-
+        proceed.setDisable(gameEnded);
          //------
          proceed.setOnAction( e-> {
              nextOrder = me.handlePlayerChoices.apply(nextOrder);
@@ -102,6 +100,10 @@ public class GameStage {
              imageV = seeCurrentCard(Outsiders.splitNextOrder(nextOrder));
              imageOfInput.setImage(imageV);
              // Setting the updated field image
+             // In case the game ended here to display the notifcation that metion the winner
+             if (gameEnded) {
+                 Outsiders.alertOfWin(me,computer).show();
+             }
          });
 
          // When the game ends the procced buttom must be disabled
@@ -154,6 +156,8 @@ public class GameStage {
         pani = new BorderPane();
         vbox = new VBox();
         analyzer = new StringBuilder();
+
+        // Setting up the alert
     }
 
     public void end() {

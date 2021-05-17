@@ -78,7 +78,7 @@ public class Main extends Application {
                     p.getPlayerName().equals(userNameTextField.getText()));
             System.out.println(exsit);
             // For testing purpose
-            if (!exsit) gameStage.MainGameStage();
+            if (exsit) gameStage.MainGameStage();
             else alert.show();
 
         });
