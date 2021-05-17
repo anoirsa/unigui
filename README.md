@@ -6,6 +6,7 @@
 - First version of the game has released
 ## Running the project
 Run the main class
+/src/main/java/Main.java
 
 ## Description of the rules :
 The game differs a little bit from the main real game Uno card game but in the next updates I will
